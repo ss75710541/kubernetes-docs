@@ -1,4 +1,4 @@
-# openshift3.11配置local vulome
+# openshift3.11配置local volume
 
 参考：
 
@@ -8,28 +8,19 @@ https://docs.okd.io/3.11/install_config/configuring_local.html
 
 https://ieevee.com/tech/2019/01/17/local-volume.html
 
-
-## 创建local volume storageclass
-
-default_example_storageclass.yaml
+## 下载local storage provisioner代码
 
 ```
-# Only create this for K8s 1.9+
-apiVersion: storage.k8s.io/v1
-kind: StorageClass
-metadata:
-  name: fast-disks
-provisioner: kubernetes.io/no-provisioner
-volumeBindingMode: WaitForFirstConsumer
-# Supported policies: Delete, Retain
-reclaimPolicy: Delete
+git clone https://github.com/kubernetes-sigs/sig-storage-local-static-provisioner.git
 ```
 
 ```
-oc create -f default_example_storageclass.yaml
+cd sig-storage-local-static-provisioner
 ```
 
 ## 生成local-volume-provisioner部署文件
+
+如果不使用helm，或不方便安装heml，则跳过生成步骤，直接修改使用已经生成好的示例yaml配置，在`provisioner/deployment/kubernetes/example/`目录下
 
 ### 安装helm
 
@@ -39,13 +30,6 @@ mac安装helm
 brew install kubernetes-helm
 ```
 
-```
-git clone https://github.com/kubernetes-sigs/sig-storage-local-static-provisioner.git
-```
-
-```
-cd sig-storage-local-static-provisioner
-```
 
 ### 修改变量
 
@@ -119,6 +103,8 @@ done
 
 ## 发布服务测试
 
+statefulset-nginx-slim.yaml
+
 ```
 apiVersion: apps/v1
 kind: StatefulSet
@@ -152,9 +138,13 @@ spec:
       spec:
         accessModes:
           - ReadWriteOnce
-        storageClassName: my-storage-class
+        storageClassName: fast-disks
         resources:
           requests:
             storage: 1Gi
 
+```
+
+```
+oc create -f statefulset-nginx-slim.yaml
 ```
