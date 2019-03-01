@@ -101,6 +101,54 @@ for vol in vol1 vol2 vol3; do
 done
 ```
 
+
+## 批量创建localvolume使用的卷
+
+添加磁盘设备
+
+创建pv
+
+```
+pvcreate /dev/vdb
+```
+
+创建vg
+
+```
+vgcreate vg_localvolume /dev/vdb
+```
+
+创建lvm
+
+```
+for i in {1..100};do
+  mkdir /mnt/fast-disks/lv$i
+  lvcreate -L 11G -n lv$i vg_localvolume
+  mkfs.xfs /dev/mapper/vg_localvolume-lv$i
+  echo "/dev/mapper/vg_localvolume-lv$i /mnt/fast-disks/lv$i xfs defaults 0 0" >> /etc/fstab
+done
+```
+
+确认并挂载 
+
+```
+cat /etc/fstab
+mount -a
+```
+
+清理lvm
+
+```
+for i in {1..100};do
+  umount /dev/mapper/vg_localvolume-lv$i
+  lvremove -y /dev/mapper/vg_localvolume-lv$i
+  rm -r /mnt/fast-disks/lv$i
+done
+
+vgremove vg_localvolume
+pvremove /dev/vdb
+```
+
 ## 发布服务测试
 
 statefulset-nginx-slim.yaml
