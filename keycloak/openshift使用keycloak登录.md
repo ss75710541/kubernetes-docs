@@ -99,9 +99,11 @@ openssl x509 -req -in $project.csr -CA $project-ca.crt -CAkey $project-ca.key -C
 cat $project.crt $project.key > $project.pem
 ```
 
-创建configmap（文件名称必须为tls.crt 和 tls.key ,否则不识别,所以在创建configmap前先修改文件名称）
+创建configmap（文件名称必须为tls.crt 和 tls.key ,否则不识别,所以在创建configmap前先修改文件名称,）
 
 ```
+cp keycloak.crt tls.crt
+cp keycloak.key tls.key
 oc create configmap keycloak-certs  --from-file=tls.crt --from-file=tls.key  -n keycloak
 ```
 
@@ -124,21 +126,16 @@ oc create configmap keycloak-certs  --from-file=tls.crt --from-file=tls.key  -n 
 ...
 ```
 
-### 创建jks证书（安装使用麻烦，只做参考，弃用）
+### <del>创建jks证书（安装使用麻烦，只做参考，弃用）<del>
 
 ```
 domain=keycloak-https-keycloak.apps181.hisun.com
 passwd=password
 project=keycloak
-
 # 生成ca key
-
 openssl genrsa -out $project-ca.key 2048
-
 # 创建根证书
-
 openssl req -utf8 -new -nodes -x509 -days 3650 -key $project-ca.key  -out $project-ca.crt -subj "/C=CN/ST=Beijing/L=Beijing/O=Hisun/OU=IT/CN=$domain"
-
 
 keytool -genkey -alias server -keyalg RSA -keystore keycloak.jks -validity 10950 -keypass $passwd -storepass $passwd -dname "CN=$domain, OU=IT, O=Hisun, L=Beijing, ST=Beijing, C=CN"
 
@@ -158,7 +155,7 @@ keytool -import -alias server -keystore keycloak.jks -file $project.crt -keypass
 oc create configmap keycloak  --from-file=keycloak.jks --from-file=standalone-ha.xml -n keycloak
 ```
 
-添加configmap挂载配置
+在keycloak的发布yaml中添加configmap挂载配置
 
 ```
 ...
@@ -182,7 +179,7 @@ oc create configmap keycloak  --from-file=keycloak.jks --from-file=standalone-ha
 
 访问`https://keycloak-https-keycloak.apps181.hisun.com `
 
-以admin账号登录keycloak ，导入[realm-openshift.json](https://raw.githubusercontent.com/ss75710541/openshift-docs/master/keycloak/realm-openshift.json)
+以admin账号登录keycloak ，点添加realm，选择文件导入[realm-openshift.json](https://raw.githubusercontent.com/ss75710541/openshift-docs/master/keycloak/realm-openshift.json)
 
 ## 修改clients
 
@@ -208,7 +205,7 @@ https://master181.hisun.com:8443/*
 
 ### 重置新用户密码
 
-选择 Users --> test --> Credentials
+选择 Users --> <新添加的用户名> --> Credentials
 
 ## 配置Openshift master
 
@@ -217,6 +214,8 @@ https://master181.hisun.com:8443/*
 登录master主机
 
 cd /etc/origin/master/
+
+注：minishift的master目录为`/var/lib/minishift/base/kube-apiserver/`
 
 上传keycloak-ca.crt文件
 
@@ -264,3 +263,5 @@ master-restart api api
 ```
 https://keycloak-https-keycloak.apps181.hisun.com/auth/realms/openshift/protocol/openid-connect/logout?redirect_uri=https://master181.hisun.com:8443/console
 ```
+
+注意：minishift 的webconsole-config是operator管理的，所以直接修改logoutPublicURL无效，需要停止webconsole-config 的 operator服务才可以，这里暂无完美解决方法
