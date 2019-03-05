@@ -37,19 +37,17 @@ chown -R etcd.etcd /var/lib/etcd/
 restorecon -Rv /var/lib/etcd
 ```
 
-5. 启动 服务
+5.启动 服务
 
 ```
 mv /etc/origin/node/pods-stopped/* /etc/origin/node/pods/
 ```
-
-6. 检查是否有错误日志
+6.检查是否有错误日志
 
 ```
 master-logs etcd etcd
 ```
-
-7. 检查openshift服务
+7.检查openshift服务
 
 ```
 oc get user
