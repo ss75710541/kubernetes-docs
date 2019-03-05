@@ -11,13 +11,13 @@ mkdir -p /etc/origin/node/pods-stopped
 mv /etc/origin/node/pods/* /etc/origin/node/pods-stopped/
 ```
 
-2.清除所有旧数据，因为etcdctl将在将要执行还原过程的节点中重新创建它(这里为安全起见，使用mv把目录改名)
+2.所有etcd主机，清除所有旧数据，因为etcdctl将在将要执行还原过程的节点中重新创建它(这里为安全起见，使用mv把目录改名)
 
 ```
 mv /var/lib/etcd /var/lib/etcd.old
 ```
 
-3.运行snapshot restore命令：
+3.所有etcd主机，运行snapshot restore命令：
 
 ```
 . /etc/etcd/etcd.conf
@@ -30,19 +30,19 @@ etcdctl3 snapshot restore /backup/etcd-xxxxxx/db \
   --skip-hash-check=true
 ```
 
-4.将权限和selinux上下文还原到还原的文件：
+4.所有etcd主机将权限和selinux上下文还原到还原的文件：
 
 ```
 chown -R etcd.etcd /var/lib/etcd/
 restorecon -Rv /var/lib/etcd
 ```
 
-5.启动 服务
+5.所有etcd主机启动服务
 
 ```
 mv /etc/origin/node/pods-stopped/* /etc/origin/node/pods/
 ```
-6.检查是否有错误日志
+6.所有etcd主机检查是否有错误日志
 
 ```
 master-logs etcd etcd
