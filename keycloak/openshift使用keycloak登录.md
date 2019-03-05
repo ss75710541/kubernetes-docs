@@ -182,7 +182,7 @@ oc create configmap keycloak  --from-file=keycloak.jks --from-file=standalone-ha
 
 访问`https://keycloak-https-keycloak.apps181.hisun.com `
 
-以admin账号登录keycloak ，导入realm-openshift.json
+以admin账号登录keycloak ，导入[realm-openshift.json](https://raw.githubusercontent.com/ss75710541/openshift-docs/master/keycloak/realm-openshift.json)
 
 ## 修改clients
 
