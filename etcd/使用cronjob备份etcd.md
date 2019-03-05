@@ -2,7 +2,7 @@
 
 ## 创建pvc
 
-在kube-system项目中手动,选择storage class `alicloud-nas`，创建名称`etcd-backup` 的pvc
+在kube-system项目中手动,选择storage class，创建名称`etcd-backup` 的pvc
 
 ## 发布备份cronjob 
 
