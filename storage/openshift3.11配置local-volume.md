@@ -202,4 +202,5 @@ oc create -f statefulset-nginx-slim.yaml
 如果文章对您有帮助，欢迎打赏，谢谢
 
 支付宝
+
 ![支付宝](../shoukuan.png)
