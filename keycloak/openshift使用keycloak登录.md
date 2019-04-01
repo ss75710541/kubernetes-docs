@@ -265,3 +265,10 @@ https://keycloak-https-keycloak.apps181.hisun.com/auth/realms/openshift/protocol
 ```
 
 注意：minishift 的webconsole-config是operator管理的，所以直接修改logoutPublicURL无效，需要停止webconsole-config 的 operator服务才可以，这里暂无完美解决方法
+
+## 支持作者
+
+如果文章对您有帮助，欢迎打赏，谢谢
+
+支付宝
+![支付宝](../shoukuan.png)

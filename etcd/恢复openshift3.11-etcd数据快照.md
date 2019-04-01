@@ -53,3 +53,11 @@ master-logs etcd etcd
 oc get user
 oc get all
 ```
+
+
+## 支持作者
+
+如果文章对您有帮助，欢迎打赏，谢谢
+
+支付宝
+![支付宝](../shoukuan.png)
