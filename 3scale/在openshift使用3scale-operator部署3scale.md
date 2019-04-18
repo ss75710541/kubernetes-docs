@@ -1,5 +1,12 @@
 # 在openshift使用3scale-operator部署3scale
 
+## 制作镜像环境依赖
+
+* [operator-sdk] version v0.5.0.
+* [dep][dep_tool] version v0.5.0+.
+* [git][git_tool]
+* [go] version 1.11+
+
 ## 制作3scale-operator镜像
 
 注：hub.docker.com 中已经上传镜像，如果不需要更新镜像中内容，可以直接使用
@@ -139,11 +146,16 @@ spec:
 
 ## 相关参考文档
 
-* [User guide](doc/user-guide.md)
-* [APIManager reference](doc/apimanager-reference.md)
-* [Tenant reference](doc/tenant-reference.md)
-* [Capabilities reference](doc/api-crd-reference.md) 
+* [User guide](https://github.com/ss75710541/3scale-operator/blob/master/doc/user-guide.md)
+* [APIManager reference](https://github.com/ss75710541/3scale-operator/blob/master/doc/apimanager-reference.md)
+* [Tenant reference](https://github.com/ss75710541/3scale-operator/blob/master/doc/tenant-reference.md)
+* [Capabilities reference](https://github.com/ss75710541/3scale-operator/blob/master/doc/api-crd-reference.md) 
 
+[git_tool]:https://git-scm.com/downloads
+[operator-sdk]:https://github.com/operator-framework/operator-sdk
+[dep_tool]:https://golang.github.io/dep/docs/installation.html
+[go]:https://golang.org/
+[kubernetes]:https://kubernetes.io/
 
 ## 支持作者
 
