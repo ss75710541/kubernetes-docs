@@ -1,0 +1,19 @@
+# openshift动态nfs
+
+参考：
+
+https://github.com/debianmaster/openshift-examples/tree/master/dynamic-nfs-on-openshift
+
+https://github.com/kubernetes-incubator/external-storage/tree/master/nfs
+
+
+```
+git clone https://github.com/kubernetes-incubator/external-storage.git
+cd external-storage/nfs
+oc adm policy add-scc-to-user privileged system:serviceaccount:default:nfs-provisioner
+oc adm policy add-cluster-role-to-user cluster-admin system:serviceaccount:default:nfs-provisioner
+kubectl create -f deploy/kubernetes/deployment.yaml
+kubectl create -f deploy/kubernetes/class.yaml
+oc patch storageclass example-nfs -p '{"metadata":{"annotations":{"storageclass.beta.kubernetes.io/is-default-class":"true"}}}'
+```
+
