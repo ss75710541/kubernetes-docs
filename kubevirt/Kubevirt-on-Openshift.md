@@ -69,6 +69,12 @@ ansible nodes -m shell -a "setenforce 0 && sed -i 's/SELINUX=.*/SELINUX=permissi
 yum install -y origin-clients
 ```
 
+clone kubevirt代码
+
+```
+git clone https://github.com/paradeum-team/kubevirt-ansible.git
+```
+
 登录管理员
 
 ```
@@ -117,7 +123,7 @@ kubevirt_web_ui_version: "v2.0.0-14.8"
 安装kubevirt
 
 ```
-ansible-playbook -i localhost playbooks/kubevirt.yml -e@vars/all.yml
+ansible-playbook -i localhost playbooks/kubevirt.yml -e@vars/all.yml -e debug_use_emulation=true
 ```
 
 ## 下载virtctl
