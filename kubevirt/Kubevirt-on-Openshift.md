@@ -193,6 +193,9 @@ spec:
         resources:
           requests:
             memory: 500M
+      networks:
+        - name: default
+          pod: {}
       hostname: centos7-1905
       terminationGracePeriodSeconds: 5
       volumes:
