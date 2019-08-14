@@ -61,6 +61,40 @@ ansible nodes -m shell -a "setenforce 0 && sed -i 's/SELINUX=.*/SELINUX=permissi
 
 ## 安装kubevirt
 
+### 检查webhook配置
+
+登录master主机
+
+检查现有openshift集群master配置文件是否配置了MutatingAdmissionWebhook和ValidatingAdmissionWebhook，如果没有，在master主机修改`/etc/origin/master/master-config.yaml`
+
+在下面位置添加相关配置
+
+```
+admissionConfig:
+  pluginConfig:
+    ...
+    MutatingAdmissionWebhook:
+      configuration:
+        apiVersion: v1
+        disable: true
+        kind: DefaultAdmissionConfig
+    ValidatingAdmissionWebhook:
+      configuration:
+        apiVersion: v1
+        disable: false
+        kind: DefaultAdmissionConfig
+    ...
+```
+
+重启master api 和 controllers
+
+```
+master-restart api
+master-restart controllers
+```
+
+### 部署kubevirt
+
 登录安装机
 
 安装oc客户端
