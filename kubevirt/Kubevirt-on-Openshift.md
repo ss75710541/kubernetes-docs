@@ -1,6 +1,98 @@
 # Kubevirt on Openshift 
 
+## Kubevirt 架构 
+
+参考：
+
+[https://github.com/kubevirt/kubevirt/blob/master/docs/architecture.md](https://github.com/kubevirt/kubevirt/blob/master/docs/architecture.md)
+[https://github.com/kubevirt/kubevirt/blob/master/docs/components.md](https://github.com/kubevirt/kubevirt/blob/master/docs/components.md)
+
+
+KubeVirt使用面向服务的体系结构和编排模式构建。
+
+### KubeVirt包含的一系列服务
+
+```
+            |
+    Cluster | (virt-controller)
+            |
+------------+---------------------------------------
+            |
+ Kubernetes | (VMI CRD)
+            |
+------------+---------------------------------------
+            |
+  DaemonSet | (virt-handler) (vm-pod M)
+            |
+
+M: Managed by KubeVirt
+CRD: Custom Resource Definition
+```
+
 kubevirt支持docker 及 crio 两种容器运行时
+
+需要虚拟化服务的用户与虚拟化 API通信，后者又与Kubernetes集群通信以安排所请求的虚拟机实例（VMI），调度，网络和存储都委托给Kubernetes，而KubeVirt则提供虚拟化功能。
+
+### 应用布局
+
+* Cluster
+	* KubeVirt 组件
+	    * virt-controller
+	    * virt-handler
+	    * libvirtd
+	    * …
+	* KubeVirt 管理 Pods
+	    * VMI Foo
+	    * VMI Bar
+	    * …
+	    
+### 架构图
+
+![](./architecture.png)
+
+### 示例流程：创建和删除VMI
+
+下面的流程演示了KubeVirt中存在的几个(不是所有)组件之间的通信流。通常，可以将通信模式看作是编排，其中所有组件都自己执行操作，以实现VMI对象提供的状态。
+
+```
+Client                     K8s API     VMI CRD  Virt Controller         VMI Handler
+-------------------------- ----------- ------- ----------------------- ----------
+
+                           listen <----------- WATCH /virtualmachines
+                           listen <----------------------------------- WATCH /virtualmachines
+                                                  |                       |
+POST /virtualmachines ---> validate               |                       |
+                           create ---> VMI ---> observe --------------> observe
+                             |          |         v                       v
+                           validate <--------- POST /pods              defineVMI
+                           create       |         |                       |
+                             |          |         |                       |
+                           schedPod ---------> observe                    |
+                             |          |         v                       |
+                           validate <--------- PUT /virtualmachines       |
+                           update ---> VMI ---------------------------> observe
+                             |          |         |                    launchVMI
+                             |          |         |                       |
+                             :          :         :                       :
+                             |          |         |                       |
+DELETE /virtualmachines -> validate     |         |                       |
+                           delete ----> * ---------------------------> observe
+                             |                    |                    shutdownVMI
+                             |                    |                       |
+                             :                    :                       :
+```
+
+免责声明：上图不完全准确，因为有一些临时的解决方法可以避免bugs和解决一些其他问题。
+
+1、客户端将新的VMI定义发布到K8s API服务器。
+2、K8s API服务器验证输入并创建VMI自定义资源定义（CRD）对象。
+3、virt-controller观察新VMI对象的创建并创建一个相应的pod。
+4、Kubernetes正在主机上安排pod。
+5、virt-controller观察到VMI的pod已启动并更新了VMI对象中的nodeName字段。现在已经设置了nodeName，责任转移到virt-handler以进行下一步的操作。
+6、virt-handler（DaemonSet）观察到VMI已分配了运行它的主机。
+7、virt-handler使用VMI规范，并在VMI的pod中使用libvirtd实例发出创建相应域的信号。
+8、客户端通过virt-api-server删除VMI对象。
+9、virt-handler观察删除并关闭域。
 
 ## 安装openshift 使用 crio(with runv)
 
