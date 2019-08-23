@@ -84,15 +84,15 @@ DELETE /virtualmachines -> validate     |         |                       |
 
 免责声明：上图不完全准确，因为有一些临时的解决方法可以避免bugs和解决一些其他问题。
 
-1、客户端将新的VMI定义发布到K8s API服务器。
-2、K8s API服务器验证输入并创建VMI自定义资源定义（CRD）对象。
-3、virt-controller观察新VMI对象的创建并创建一个相应的pod。
-4、Kubernetes正在主机上安排pod。
-5、virt-controller观察到VMI的pod已启动并更新了VMI对象中的nodeName字段。现在已经设置了nodeName，责任转移到virt-handler以进行下一步的操作。
-6、virt-handler（DaemonSet）观察到VMI已分配了运行它的主机。
-7、virt-handler使用VMI规范，并在VMI的pod中使用libvirtd实例发出创建相应域的信号。
-8、客户端通过virt-api-server删除VMI对象。
-9、virt-handler观察删除并关闭域。
+1. 客户端将新的VMI定义发布到K8s API服务器。
+2. K8s API服务器验证输入并创建VMI自定义资源定义（CRD）对象。
+3. virt-controller观察新VMI对象的创建并创建一个相应的pod。
+4. Kubernetes正在主机上安排pod。
+5. virt-controller观察到VMI的pod已启动并更新了VMI对象中的nodeName字段。现在已经设置了nodeName，责任转移到virt-handler以进行下一步的操作。
+6. virt-handler（DaemonSet）观察到VMI已分配了运行它的主机。
+7. virt-handler使用VMI规范，并在VMI的pod中使用libvirtd实例发出创建相应域的信号。
+8. 客户端通过virt-api-server删除VMI对象。
+9. virt-handler观察删除并关闭域。
 
 ## 安装openshift 使用 crio(with runv)
 
