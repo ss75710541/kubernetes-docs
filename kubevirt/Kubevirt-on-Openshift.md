@@ -286,9 +286,9 @@ docker push offlineregistry.dataman-inc.com:5000/vmdisks/centos7:1905
 
 ## 发布 centos7 vm
 
-访问 https://kubevirt-web-ui.apps164-53.hisun.com
+访问 https://kubevirt-web-ui.xxx.xxx.com
 
-使用yaml发布vm
+使用containerDisk 发布非持久化vm
 
 ```
 apiVersion: kubevirt.io/v1alpha3
@@ -338,6 +338,85 @@ spec:
                     centos:123456
                 expire: false
           name: cloudinitdisk
+```
+
+使用 data-volume + localvolume 发布持久化 vm
+
+localvolume 使用参考：[openshift3.11配置local-volume](https://github.com/ss75710541/openshift-docs/blob/master/storage/openshift3.11%E9%85%8D%E7%BD%AElocal-volume.md)
+
+```
+apiVersion: kubevirt.io/v1alpha3
+kind: VirtualMachine
+metadata:
+  name: centos7
+spec:
+  dataVolumeTemplates:
+    - metadata:
+        name: centos7-rootdisk
+      spec:
+        pvc:
+          accessModes:
+            - ReadWriteOnce
+          dataSource: null
+          resources:
+            requests:
+              storage: 8Gi
+          storageClassName: fast-disks
+        source:
+          http: 
+            url: http://172.26.163.182:8081/packages/kubevirt-image/CentOS-7-x86_64-GenericCloud-1905.qcow2
+      status: {}
+  running: true
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        vm.kubevirt.io/name: centos7
+    spec:
+      domain:
+        cpu:
+          cores: 1
+        devices:
+          disks:
+            - bootOrder: 1
+              disk:
+                bus: virtio
+              name: rootdisk
+            - bootOrder: 3
+              disk:
+                bus: virtio
+              name: cloudinitdisk
+          interfaces:
+            - bootOrder: 2
+              masquerade: {}
+              name: nic0
+          rng: {}
+        machine:
+          type: ''
+        resources:
+          requests:
+            memory: 512M
+      hostname: centos7
+      networks:
+        - name: nic0
+          pod: {}
+      terminationGracePeriodSeconds: 0
+      volumes:
+        - dataVolume:
+            name: centos7-rootdisk
+          name: rootdisk
+        - cloudInitNoCloud:
+            userData: |
+              #cloud-config
+              ssh_pwauth: yes
+              chpasswd:
+                list: |
+                    root:123456
+                    centos:123456
+                expire: false
+          name: cloudinitdisk
+status:
+  created: true
 ```
 
 创建service, 暴露vm 内端口
