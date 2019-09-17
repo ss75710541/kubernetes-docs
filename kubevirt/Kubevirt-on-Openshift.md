@@ -249,7 +249,7 @@ kubevirt_web_ui_version: "v2.0.0-14.8"
 安装kubevirt
 
 ```
-ansible-playbook -i localhost playbooks/kubevirt.yml -e@vars/all.yml -e debug_use_emulation=true
+ansible-playbook -i localhost playbooks/kubevirt.yml -e@vars/all.yml
 ```
 
 ## 下载virtctl
@@ -364,7 +364,7 @@ spec:
           storageClassName: fast-disks
         source:
           http: 
-            url: http://172.26.163.182:8081/packages/kubevirt-image/CentOS-7-x86_64-GenericCloud-1905.qcow2
+            url: https://cloud.centos.org/centos/7/images/CentOS-7-x86_64-GenericCloud-1907.qcow2.xz
       status: {}
   running: true
   template:
