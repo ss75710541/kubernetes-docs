@@ -143,7 +143,7 @@ http://172.26.163.182:8081/packages/kubevirt-image/alpine310-virt-base-0.8.qcow2
 
 ```
 apiVersion: kubevirt.io/v1alpha3
-kind: VirtualMachine
+kind: VirtualMachineInstance
 metadata:
   name: alpine310-virt
 spec:
@@ -170,6 +170,15 @@ spec:
       labels:
         vm.kubevirt.io/name: alpine310-virt
     spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: vm
+                operator: In
+                values:
+                - 'true'
       domain:
         cpu:
           cores: 1
