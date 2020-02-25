@@ -47,7 +47,7 @@ http://mirror.lzu.edu.cn/alpine/v3.10/main
 
 ## 设置持久化存储
 
-alpine 默认从内存引导启动，没有技术化，所以需要执行下面操作
+alpine 默认从内存引导启动，没有持久化，所以需要执行下面操作
 
 ```
 setup-disk
