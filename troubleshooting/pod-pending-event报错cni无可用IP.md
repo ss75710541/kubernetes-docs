@@ -1,0 +1,20 @@
+# pod pending event报错cni无可用IP
+
+如图报错
+
+![](./cni/cni-ip-0.png)
+
+解决方法参考：https://github.com/debianmaster/openshift-examples/issues/59
+
+按下面步骤操作
+
+```
+oc adm drain compute9.paradeum.local
+systemctl stop atomic-openshift-node
+rm -rf /var/lib/cni/networks/openshift-sdn/*
+systemctl start atomic-openshift-node
+systemctl restart docker
+oc adm uncordon compute9.paradeum.local
+```
+
+注意：因为Pod异常状态时间比较长，自动恢复比较慢，可手动异常pod快速恢复
