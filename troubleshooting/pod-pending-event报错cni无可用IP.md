@@ -13,8 +13,7 @@ oc adm drain compute9.paradeum.local
 systemctl stop atomic-openshift-node
 rm -rf /var/lib/cni/networks/openshift-sdn/*
 systemctl start atomic-openshift-node
-systemctl restart docker
 oc adm uncordon compute9.paradeum.local
 ```
 
-注意：因为Pod异常状态时间比较长，自动恢复比较慢，可手动异常pod快速恢复
+注意：因为Pod异常状态时间比较长，自动恢复比较慢，可手动异常pod快速恢复，特殊情况也可以手动重启docker
