@@ -143,7 +143,7 @@ http://172.26.163.182:8081/packages/kubevirt-image/alpine310-virt-base-0.8.qcow2
 
 ```
 apiVersion: kubevirt.io/v1alpha3
-kind: VirtualMachineInstance
+kind: VirtualMachine
 metadata:
   name: alpine310-virt
 spec:
@@ -154,11 +154,10 @@ spec:
         pvc:
           accessModes:
             - ReadWriteOnce
-          dataSource: null
           resources:
             requests:
               storage: 1Gi
-          storageClassName: example-nfs
+          storageClassName: custom-nas-storage
         source:
           http: 
             url: http://172.26.163.182:8081/packages/kubevirt-image/alpine310-virt-base-0.8.qcow2.gz
@@ -197,7 +196,7 @@ spec:
           type: ''
         resources:
           requests:
-            memory: 512M
+            memory: 64M
       hostname: alpine310-virt
       networks:
         - name: nic0

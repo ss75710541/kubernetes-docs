@@ -213,6 +213,12 @@ oc login -u <admin_user> -p <admin_password> master164-53.hisun.com:8443
 oc adm policy add-cluster-role-to-user  cluster-admin system:serviceaccount:kubevirt-web-ui:kubevirt-web-ui-operator
 ```
 
+添加seviceaccount sriov-device-plugin privileged权限
+
+```
+oc adm policy add-scc-to-user privileged -n kubevirt -z sriov-device-plugin
+```
+
 vi roles/kubevirt/templates/kubevirt-config.yaml
 
 添加 `debug.useEmulation: 'true'`， 使用完全虚拟化
