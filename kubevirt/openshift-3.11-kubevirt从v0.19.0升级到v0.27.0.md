@@ -163,10 +163,10 @@ done
 
 ## kubevirt web ui
 
+升级到 v2.0.1
 
-github 地址：https://github.com/kubevirt/web-ui
+```
+kubectl patch KWebUI kubevirt-web-ui -n kubevirt-web-ui --type=json -p '[{ "op": "add", "path": "/spec/version", "value": "v2.0.1" }]'
+```
 
-kubevrit web ui 已经弃用，建议使用openshift console 包括kubevirt 管理
-
-在这就不考虑kubevirt web ui 升级了
-
+kubevrit web ui 新版本已经弃用直接部署，建议使用openshift console 包括kubevirt 管理，所以quay.io 的目前最新版本就只是到v2.0.1
