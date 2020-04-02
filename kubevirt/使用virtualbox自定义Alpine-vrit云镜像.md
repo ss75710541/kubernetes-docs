@@ -1,6 +1,6 @@
 # 使用virtualbox自定义Alpine-vrit云镜像
     
-下载 [alpine-virt-3.10.3-x86_64.iso](http://dl-cdn.alpinelinux.org/alpine/v3.10/releases/x86_64/alpine-virt-3.10.3-x86_64.iso)
+下载 [alpine-virt-3.11.5-x86_64.iso](http://dl-cdn.alpinelinux.org/alpine/v3.10/releases/x86_64/alpine-virt-3.11.5-x86_64.iso)
 
 ## 创建vm
 
@@ -18,9 +18,9 @@ virtualbox 创建vm操作参考 [在 VirtualBox 中创建新的虚拟机](https:
 ```
 # setup-interfaces
 
-rc-update add networking
+# rc-update add networking
 
-rc-servce networking restart
+# service networking restart
 
 ```
 
@@ -42,7 +42,7 @@ vi /etc/apk/repositories
 
 ```
 /media/cdrom/apks
-http://mirror.lzu.edu.cn/alpine/v3.10/main
+http://mirror.lzu.edu.cn/alpine/v3.11/main
 ```
 
 ## 设置持久化存储
@@ -57,13 +57,27 @@ setup-disk
 
 输入持久化的数据类型 `sys`
 
-## 重启
+## 关机
 
 ```
-reboot
+poweroff
 ```
+
+## 删除 iso 引导项
+
+注意：vitrualbox , 调整引导顺序，或删除 iso 引导， 否则默认还是会进入iso 引导到内存系统
+
+## 开机
+
+在vitrualbox 中启动
 
 ## 设置ssh
+
+因为dns 信息重启会失效，所以设置ssh 前重新设置 dns
+
+```
+# setup-dns
+```
 
 ```
 # setup-sshd
@@ -82,7 +96,13 @@ PermitRootLogin yes
 重启sshd
 
 ```
-rc-service sshd restart
+service sshd restart
+```
+
+## 修改root 默认密码
+
+```
+passwd
 ```
 
 ## 替换时区文件 /etc/localtime
@@ -91,10 +111,28 @@ rc-service sshd restart
 scp Shanghai root@192.168.99.107:/etc/localtime
 ```
 
-## 修改root默认密码
+## 安装 cloud-init
+
+添加社区测试源
+
+vi /etc/apk/repositories
 
 ```
-passwd
+#/media/cdrom/apks
+http://mirror.lzu.edu.cn/alpine/v3.11/main
+http://mirror.lzu.edu.cn/alpine/v3.11/community
+@edge http://mirror.lzu.edu.cn/alpine/edge/main
+@edgecommunity http://mirror.lzu.edu.cn/alpine/edge/community
+@testing http://mirror.lzu.edu.cn/alpine/edge/testing
+```
+
+
+```
+# apk add --update cloud-init@testing
+# rm -rf /var/lib/apt/lists/*
+# rm /var/cache/apk/*
+# rc-update add cloud-init
+# service cloud-init restart
 ```
 
 ## 关机

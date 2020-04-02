@@ -39,7 +39,7 @@ sed -i 's/index.docker.io/dockerhub.azk8s.cn/g' kubevirt-operator.yaml
 # 跨版本升级有可能需要新的RBAC权限 ，所以删除旧的创建新的
 oc delete ClusterRoleBinding kubevirt-operator 
 # 跨版本升级有可能 virt-operator 部分字段不能修改，所以删除重建
-oc delete deployment virt-operator
+oc delete deployment virt-operator -n kubevirt
 kubectl apply -f kubevirt-operator.yaml
 ```
 
