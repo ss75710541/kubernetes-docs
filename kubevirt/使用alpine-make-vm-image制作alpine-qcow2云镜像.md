@@ -74,9 +74,6 @@ wget https://raw.githubusercontent.com/alpinelinux/alpine-make-vm-image/master/e
 cat > repositories <<EOF
 http://mirror.lzu.edu.cn/alpine/v3.11/main
 http://mirror.lzu.edu.cn/alpine/v3.11/community
-@edge http://mirror.lzu.edu.cn/alpine/edge/main
-@edgecommunity http://mirror.lzu.edu.cn/alpine/edge/community
-@testing http://mirror.lzu.edu.cn/alpine/edge/testing
 EOF
 ```
 
@@ -89,7 +86,7 @@ EOF
   --image-format qcow2 \
   --repositories-file ./repositories \
   --mirror-uri http://mirror.lzu.edu.cn/alpine \
-  --image-size 2G \
+  --image-size 1G \
   --packages "ca-certificates ssl_client chrony less logrotate openssh sudo" \
   --script-chroot \
   alpine-v3.11-$(date +%Y-%m-%d).qcow2 -- ./configure.sh
@@ -100,4 +97,3 @@ EOF
 ```
 gzip alpine-v3.11-$(date +%Y-%m-%d).qcow2 
 ```
-
