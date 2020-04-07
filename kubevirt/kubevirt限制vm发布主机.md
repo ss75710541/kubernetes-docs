@@ -18,9 +18,9 @@ done
 kubectl patch ds/virt-handler -n kubevirt -p '{"spec":{"template":{"spec":{"nodeSelector":{"vm":"true"},"tolerations":[{"key":"vm","operator":"Equal","value":"true","effect":"NoExecute"}]}}}}'
 ```
 
-## 发布忽略污点的vm
+## 发布容忍污点的vm
 
-亲和性相关内容
+亲和性相关配置
 
 ```
 ...
@@ -37,11 +37,11 @@ kubectl patch ds/virt-handler -n kubevirt -p '{"spec":{"template":{"spec":{"node
 ...
 ```
 
-忽略污点相关内容
+容忍相关主机配置
 
 ```
 		...
-      hostname: alpine310-v0270-virt
+      hostname: alpine3115-v0270-virt
       tolerations:
         - key: "vm"
           operator: "Equal"
@@ -113,7 +113,7 @@ spec:
         resources:
           requests:
             memory: 128M
-      hostname: alpine310-v0270-virt
+      hostname: alpine3115-v0270-virt
       tolerations:
         - key: "vm"
           operator: "Equal"
