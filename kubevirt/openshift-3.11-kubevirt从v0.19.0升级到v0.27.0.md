@@ -43,7 +43,6 @@ oc delete deployment virt-operator -n kubevirt
 kubectl apply -f kubevirt-operator.yaml
 ```
 
-
 ## 限制 kubevrit virt-handler 发布主机
 
 ```
@@ -167,6 +166,8 @@ done
 
 ```
 kubectl patch KWebUI kubevirt-web-ui -n kubevirt-web-ui --type=json -p '[{ "op": "add", "path": "/spec/version", "value": "v2.0.1" }]'
+kubectl patch KWebUI kubevirt-web-ui -n kubevirt-web-ui --type=json -p '[{ "op": "add", "path": "/spec/registry_url", "value": "quay.mirrors.ustc.edu.cn" }]'
+
 ```
 
 kubevrit web ui 新版本已经弃用直接部署，建议使用openshift console 包括kubevirt 管理，所以quay.io 的目前最新版本就只是到v2.0.1

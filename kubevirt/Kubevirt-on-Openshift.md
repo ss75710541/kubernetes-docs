@@ -204,7 +204,7 @@ git clone https://github.com/paradeum-team/kubevirt-ansible.git
 登录管理员
 
 ```
-oc login -u <admin_user> -p <admin_password> master164-53.hisun.com:8443
+oc login -u <admin_user> -p <admin_password> master195.hisun.com:8443
 ```
 
 给ui使用sa 添加管理员权限
@@ -248,7 +248,7 @@ version: 0.19.0
 ...
 ### Web UI ##
 ...
-kubevirt_web_ui_version: "v2.0.0-14.8"
+kubevirt_web_ui_version: "v2.0.1"
 ...
 ```
 
