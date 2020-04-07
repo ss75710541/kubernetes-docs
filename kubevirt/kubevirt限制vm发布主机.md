@@ -1,5 +1,11 @@
 # kubevirt限制vm发布主机
 
+参考：
+
+https://kubevirt.io/user-guide/#/usage/node-placement?id=taints-and-tolerations
+
+https://docs.openshift.com/container-platform/3.11/admin_guide/scheduling/taints_tolerations.html#admin-guide-taints-add
+
 ## 设置主机污点及label
 
 ```
