@@ -37,7 +37,7 @@ configtxgen --version
 ## 下载fabric-external-chaincodes
 
 ```
-git clone https://github.com/vanitas92/fabric-external-chaincodes.git
+git clone https://github.com/ss75710541/fabric-external-chaincodes.git
 ```
 
 ## 初始化配置
