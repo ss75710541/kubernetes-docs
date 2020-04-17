@@ -14,7 +14,7 @@ oc login
 ```
 for i in 82 83 84
 do
-	oc label node node$i.dmos.dataman fabric=true
+	oc label node node$i.pld.paradeum fabric=true
 done
 ```
 
@@ -59,9 +59,9 @@ chmod +x fabricOps.sh
 
 ```
 [fabric]
-node82.dmos.dataman
-node83.dmos.dataman
-node84.dmos.dataman
+node82.pld.paradeum
+node83.pld.paradeum
+node84.pld.paradeum
 ```
 同步目录，设置buildpack/bin 脚本执行权限
 
@@ -428,4 +428,4 @@ This marble already exists: marble2
 
 https://medium.com/swlh/how-to-implement-hyperledger-fabric-external-chaincodes-within-a-kubernetes-cluster-fd01d7544523
 
-http://blog.hubwiz.com/2020/03/12/fabric-2-external-chaincode/
+http://blog.hubwiz.com/2020/03/12/fabric-2-external-chaincode/pld.paradeum
