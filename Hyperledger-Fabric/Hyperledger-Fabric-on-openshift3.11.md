@@ -189,7 +189,7 @@ peer channel list
 oc -n hyperledger rsh cli-org1-57b7d7d848-fl7f7
 ```
 
-打包链码连接信息
+打包链码连接信息，并部署
 
 ```
 cd /opt/gopath/src/github.com/marbles/packaging
@@ -428,4 +428,4 @@ This marble already exists: marble2
 
 https://medium.com/swlh/how-to-implement-hyperledger-fabric-external-chaincodes-within-a-kubernetes-cluster-fd01d7544523
 
-http://blog.hubwiz.com/2020/03/12/fabric-2-external-chaincode/pld.paradeum
+http://blog.hubwiz.com/2020/03/12/fabric-2-external-chaincode/
