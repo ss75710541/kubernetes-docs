@@ -26,6 +26,10 @@ x.x.x.x 为 openshift router ip
 echo 'address=/apps.offline-okd.com/x.x.x.x' >> /usr/local/etc/dnsmasq.d/address.conf
 ```
 
+## 单个非通用域名解析添加到/etc/hosts
+
+dnsmasq 会优先获取 /etc/hosts中解析
+
 ## 重启 `dnsmasq`
 
 ```
