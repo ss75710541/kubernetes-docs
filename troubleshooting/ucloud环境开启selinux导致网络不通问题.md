@@ -27,8 +27,7 @@ reboot
 ```
 ### 3.使用以下命令reset权限位
 ```
-restorecon -R -v /etc
-restorecon -R -v /usr
+restorecon -R -v /
 ```
 ### 4.再次重启虚机
 ```
