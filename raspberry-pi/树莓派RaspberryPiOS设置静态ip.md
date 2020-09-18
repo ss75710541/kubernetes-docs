@@ -30,8 +30,8 @@ static ip_address=192.168.0.103/24
 static routers=192.168.0.103
 ```
 
-## 重启networking
+## 重启
 
 ```
-systemctl restart networking
+reboot
 ```
