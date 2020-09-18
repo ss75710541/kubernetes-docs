@@ -1,4 +1,4 @@
-# 树莓派开启ssh
+# 树莓派raspberry pi os开启ssh
 
 ## 在sd卡中写入ssh文件
 
