@@ -54,5 +54,5 @@ echo "deb [arch=armhf] https://mirrors.tuna.tsinghua.edu.cn/docker-ce/linux/debi
 
 ```
 apt update
-apt install docker-ce
+apt install docker-ce docker-compose pass gnupg2
 ```
