@@ -56,3 +56,9 @@ echo "deb [arch=armhf] https://mirrors.tuna.tsinghua.edu.cn/docker-ce/linux/debi
 apt update
 apt install docker-ce docker-compose pass gnupg2
 ```
+
+## 参考 
+
+https://mirror.tuna.tsinghua.edu.cn/help/raspbian/
+
+https://anto.online/guides/cannot-autolaunch-d-bus-without-x11-display/
