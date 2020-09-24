@@ -92,7 +92,7 @@ sudo apt-get update -y
 sudo apt-get upgrade -y
 ```
 
-## 步骤10.防止Pi休眠
+## 步骤10.配置无线静态IP
 
 配置静态ip，编辑`/etc/dhcpcd.conf` 
 
@@ -100,7 +100,7 @@ sudo apt-get upgrade -y
 sudo vi /etc/dhcpcd.conf
 ```
 
-添加以下内容：
+添加以下内容(无线为wlan0网卡，默认有线为eth0)：
 
 ```
 interface wlan0

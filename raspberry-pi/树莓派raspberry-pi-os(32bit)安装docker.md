@@ -24,6 +24,22 @@ SHA-256:4522df4a29f9aac4b0166fbfee9f599dab55a997c855702bfe35329c13334668
 
 读卡器拔出再播放，显示 挂载为目录，进入目录创建 ssh 文件，内容不重要，有这个文件启动系统时就会开启ssh服务
 
+## 设置时间同步
+
+```
+apt install chrony
+```
+## 设置时区
+
+```
+timedatectl set-timezone Shanghai
+```
+
+检查时间是否正常
+
+```
+date
+```
 
 ## 安装docker
 
