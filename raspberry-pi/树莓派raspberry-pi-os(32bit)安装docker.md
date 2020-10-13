@@ -32,7 +32,7 @@ apt install chrony
 ## 设置时区
 
 ```
-timedatectl set-timezone Shanghai
+timedatectl set-timezone Asia/Shanghai
 ```
 
 检查时间是否正常
@@ -45,12 +45,16 @@ date
 
 设置系统默认源为清华源
 
+编辑 `/etc/apt/sources.list` 文件，删除原文件所有内容，用以下内容取代：
+
 ```
-# 编辑 `/etc/apt/sources.list` 文件，删除原文件所有内容，用以下内容取代：
 deb http://mirrors.tuna.tsinghua.edu.cn/raspbian/raspbian/ buster main non-free contrib rpi
 deb-src http://mirrors.tuna.tsinghua.edu.cn/raspbian/raspbian/ buster main non-free contrib rpi
+```
 
-# 编辑 `/etc/apt/sources.list.d/raspi.list` 文件，删除原文件所有内容，用以下内容取代：
+编辑 `/etc/apt/sources.list.d/raspi.list` 文件，删除原文件所有内容，用以下内容取代：
+
+```
 deb http://mirrors.tuna.tsinghua.edu.cn/raspberrypi/ buster main ui
 ```
 

@@ -11,8 +11,24 @@ Raspbian Buster 默认使用nftables而不是iptables。 K3S 网络功能需要�
 sudo iptables -F
 sudo update-alternatives --set iptables /usr/sbin/iptables-legacy
 sudo update-alternatives --set ip6tables /usr/sbin/ip6tables-legacy
+```
+
+编辑 `/boot/cmdline.txt`, 最后添加`cgroup_memory=1 cgroup_enable=memory`
+
+完整内容如下：
+
+```
+console=serial0,115200 console=tty1 root=PARTUUID=ffd08aef-02 rootfstype=ext4 elevator=deadline fsck.repair=yes rootwait cgroup_memory=1 cgroup_enable=memory
+
+```
+
+重启主机
+
+```
 sudo reboot
 ```
+
+安装k3s
 
 ```
 curl -sfL http://rancher-mirror.cnrancher.com/k3s/k3s-install.sh | INSTALL_K3S_MIRROR=cn sh -s - --docker --node-name raspberrypi
@@ -34,6 +50,24 @@ VERSION_KUBE_DASHBOARD=$(curl -w '%{url_effective}' -I -L -s -S ${GITHUB_URL}/la
 sudo k3s kubectl create -f https://raw.githubusercontent.com/kubernetes/dashboard/${VERSION_KUBE_DASHBOARD}/aio/deploy/recommended.yaml
 ```
 
+树莓派环境在线安装 dashboard 会报证书错误
+
+```
+Unable to connect to the server: x509: certificate has expired or is not yet valid
+```
+
+在客户端电脑直接下载 `recommended.yaml` 文件，上传到树莓派主机再创建
+
+```
+wget https://raw.githubusercontent.com/kubernetes/dashboard/v2.0.4/aio/deploy/recommended.yaml
+```
+
+本地文件安装 dashboard
+
+```
+k3s kubectl create -f recommended.yaml
+```
+
 ### 仪表盘 RBAC 配置
 
 创建以下资源清单文件：
@@ -41,16 +75,18 @@ sudo k3s kubectl create -f https://raw.githubusercontent.com/kubernetes/dashboar
 dashboard.admin-user.yml
 
 ```
+cat > dashboard.admin-user.yml <<EOF
 apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: admin-user
   namespace: kubernetes-dashboard
+EOF
 ```
-
 dashboard.admin-user-role.yml
 
 ```
+cat > dashboard.admin-user-role.yml <<EOF
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
@@ -63,6 +99,7 @@ subjects:
   - kind: ServiceAccount
     name: admin-user
     namespace: kubernetes-dashboard
+EOF
 ```
 
 部署admin-user 配置：
