@@ -77,6 +77,20 @@ apt update
 apt install docker-ce docker-compose pass gnupg2
 ```
 
+编辑 `/boot/cmdline.txt` 文件最后添加 `cgroup_memory=1 cgroup_enable=memory`
+
+修改后内容如下：
+
+```
+console=serial0,115200 console=tty1 root=PARTUUID=8d55a508-02 rootfstype=ext4 elevator=deadline fsck.repair=yes rootwait cgroup_memory=1 cgroup_enable=memory
+```
+
+重启主机
+
+```
+reboot
+```
+
 ## 参考 
 
 https://mirror.tuna.tsinghua.edu.cn/help/raspbian/

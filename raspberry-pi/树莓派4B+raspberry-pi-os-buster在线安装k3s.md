@@ -28,7 +28,9 @@ console=serial0,115200 console=tty1 root=PARTUUID=ffd08aef-02 rootfstype=ext4 el
 sudo reboot
 ```
 
-安装k3s
+## 安装k3s server
+
+安装server有node相关参数是因为server内置了agent
 
 ```
 curl -sfL http://rancher-mirror.cnrancher.com/k3s/k3s-install.sh | INSTALL_K3S_MIRROR=cn sh -s - --docker --node-name raspberrypi
@@ -129,6 +131,33 @@ chrome 浏览器提示报错 您的连接不是私密连接 NET::ERR_CERT_INVALI
 在chrome该页面上，直接键盘敲入这11个字符：`thisisunsafe`
 
 （鼠标点击当前页面任意位置，让页面处于最上层即可输入）
+
+## 添加Agent
+
+注意：所有节点的主机名都要不同
+
+agent主机 添加命令示例，其中K3S_TOKEN ，是在从master主机`/var/lib/rancher/k3s/server/node-token` 获取的
+
+```
+curl -sfL http://rancher-mirror.cnrancher.com/k3s/k3s-install.sh | INSTALL_K3S_MIRROR=cn K3S_URL=<K3S_URL> K3S_TOKEN=<cat /var/lib/rancher/k3s/server/node-token> sh -s  - --docker --node-name <NODE_NAME> 
+```
+
+常用添加agent 参数
+
+```
+     --server value \
+     --docker \
+     --node-name value \
+     --node-label foo=bar \
+     --node-label hello=world \
+     --node-taint key1=value1:NoExecute
+```
+
+最终示例：
+
+```
+curl -sfL http://rancher-mirror.cnrancher.com/k3s/k3s-install.sh | INSTALL_K3S_MIRROR=cn K3S_URL=https://192.168.0.105:6443 K3S_TOKEN=K10685e1ca93e1a980e14c2465a76e6217dafb1b4dc651793ce13a40b63a3a8c51a::server:63d408b61cec11e4fb891838b188764f sh -s  - --docker --node-name node107 --node-label bfs=true --node-label rnode=true
+```
 
 ## 参考
 
