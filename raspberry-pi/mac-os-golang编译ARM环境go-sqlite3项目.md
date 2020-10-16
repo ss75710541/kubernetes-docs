@@ -1,4 +1,4 @@
-# mac os golang使用go-sqlite3项目
+# mac os golang编译ARM环境go-sqlite3项目
 
 ## 安装交叉编译C/C++依赖
 
