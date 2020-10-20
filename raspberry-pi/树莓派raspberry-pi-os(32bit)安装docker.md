@@ -41,6 +41,20 @@ timedatectl set-timezone Asia/Shanghai
 date
 ```
 
+## 安装配置vim
+
+```
+apt install vim
+```
+
+编辑 `/usr/share/vim/vim81/defaults.vim`
+
+```
+vim /usr/share/vim/vim81/defaults.vim
+```
+
+找到 79 行左右  `set mouse=a` 改为 `set mouse=v` 
+
 ## 安装docker
 
 设置系统默认源为清华源

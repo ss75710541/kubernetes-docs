@@ -42,6 +42,33 @@ curl -sfL http://rancher-mirror.cnrancher.com/k3s/k3s-install.sh | INSTALL_K3S_M
 /var/lib/rancher/k3s/server/cred/passwd 
 ```
 
+## 安装配置heml
+
+### 安装 snaps
+
+```
+sudo apt update
+sudo apt install snapd
+```
+
+### 安装heml
+
+```
+sudo snap install helm --classic
+```
+
+### 配置kube cofnig
+
+复制k3s.yaml到 ~/.kube/config, 然后就helm 命令就可以管理了
+
+```
+cp /etc/rancher/k3s/k3s.yaml ~/.kube/config
+```
+
+```
+helm ls --all-namespaces
+```
+
 ## Kubernetes 仪表盘
 
 ### 部署 Kubernetes 仪表盘
@@ -168,3 +195,5 @@ https://docs.rancher.cn/docs/k3s/installation/installation-requirements/_index
 https://docs.rancher.cn/docs/k3s/installation/install-options/_index
 
 https://liujinye.gitbook.io/openshift-docs/troubleshooting/macoschrome-fang-wen-https-ye-mian-xian-shi-errcertinvalid-qie-bu-neng-dian-ji-xu
+
+https://snapcraft.io/install/helm/raspbian#install
