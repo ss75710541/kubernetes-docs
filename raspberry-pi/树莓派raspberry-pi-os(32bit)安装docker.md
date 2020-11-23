@@ -99,6 +99,17 @@ apt install docker-ce docker-compose pass gnupg2
 console=serial0,115200 console=tty1 root=PARTUUID=8d55a508-02 rootfstype=ext4 elevator=deadline fsck.repair=yes rootwait cgroup_memory=1 cgroup_enable=memory
 ```
 
+编辑  `/etc/docker/daemon.json` ,添加忽略镜像库证书地址，及默认镜像库
+
+```
+cat > /etc/docker/daemon.json <<EOF
+{
+	"insecure-registries":["offlineregistry.offline-okd.com:5000"],
+	"registry-mirror":["offlineregistry.offline-okd.com:5000"]
+}
+EOF
+```
+
 重启主机
 
 ```
