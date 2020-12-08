@@ -4,6 +4,12 @@
 
 参考：https://liujinye.gitbook.io/openshift-docs/raspberry-pi/shu-mei-pai-raspberrypios32bit-an-zhuang-docker
 
+## 禁用swap
+
+```
+dphys-swapfile swapoff
+```
+
 ## 在 Raspbian Buster 上启用旧版的 iptables
 Raspbian Buster 默认使用nftables而不是iptables。 K3S 网络功能需要使用iptables，而不能使用nftables。 按照以下步骤切换配置Buster使用legacy iptables：
 
