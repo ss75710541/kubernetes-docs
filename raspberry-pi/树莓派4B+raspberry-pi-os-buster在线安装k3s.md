@@ -4,10 +4,10 @@
 
 参考：https://liujinye.gitbook.io/openshift-docs/raspberry-pi/shu-mei-pai-raspberrypios32bit-an-zhuang-docker
 
-## 禁用swap
+## 永久禁用swap
 
 ```
-dphys-swapfile swapoff
+systemctl disable dphys-swapfile.service --now
 ```
 
 ## 在 Raspbian Buster 上启用旧版的 iptables
