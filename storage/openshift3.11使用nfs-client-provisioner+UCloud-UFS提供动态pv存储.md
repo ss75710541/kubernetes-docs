@@ -103,9 +103,11 @@ spec:
         app: nfs-client-provisioner
     spec:
       serviceAccountName: nfs-client-provisioner
+      nodeSelector:
+        node-role.kubernetes.io/infra: 'true'
       containers:
         - name: nfs-client-provisioner
-          image: offlineregistry.offline-okd.com:5000/external_storage/nfs-client-provisioner:v3.1.0-k8s1.11
+          image: quay.io/external_storage/nfs-client-provisioner:v3.1.0-k8s1.11
           volumeMounts:
             - name: nfs-client-root
               mountPath: /persistentvolumes
@@ -132,6 +134,7 @@ spec:
   resources:
     requests:
       storage: 200Gi  # 不必纠结是否与实际UFS 申请的存储大小一致，因为这个是不是后期storageclass创建的动态pv
+---
 # 创建pv
 apiVersion: v1
 kind: PersistentVolume
