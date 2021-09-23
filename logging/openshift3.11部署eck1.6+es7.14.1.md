@@ -25,7 +25,7 @@ spec:
         disabled: true
   nodeSets:
   - name: master
-    count: 1 # 数量
+    count: 1
     config:
       node.roles: ["master", "data", "ingest", "ml", "transform"]
     volumeClaimTemplates:
@@ -37,7 +37,7 @@ spec:
         resources:
           requests:
             storage: 99Gi
-        storageClassName: fast-disks # 当前使用的 storageclass 
+        storageClassName: fast-disks
     podTemplate:
       spec:
         nodeSelector:
@@ -51,6 +51,14 @@ spec:
         - name: elasticsearch
           securityContext:
             privileged: true
+          env:
+          - name: ES_JAVA_OPTS
+            value: "-Xms11g -Xmx11g"
+          resources:
+            limits:
+              memory: 12Gi
+            requests:
+              memory: 12Gi
 ```
 
 ```
