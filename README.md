@@ -1,3 +1,3 @@
-## 不知所措的openshift kubernates
+## 不知所措的openshift kubernetes
 
-openshift kubernates 相关文档记录
+openshift kubernetes 相关文档记录
