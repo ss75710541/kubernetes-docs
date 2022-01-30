@@ -29,7 +29,7 @@ ingress:
   tls:
     # options: rancher, letsEncrypt, secret
     source: secret
-    secretName: solarfs.io-tls
+    secretName: example-com-tls
 ```
 
 ## 生成rancher/template 目录
@@ -53,9 +53,5 @@ kubectl -n cattle-system apply -R -f ./rancher
 
 ## 参考
 
-https://github.com/ss75710541/operator-env/blob/main/rancher/helm%E7%BA%BF%E4%B8%8B%E5%AE%89%E8%A3%85rancher.md
-
-https://nimtechnology.com/2021/08/25/argocd-add-other-cluster-rancher-or-k8s-into-argocd/
-
-https://www.cnblogs.com/novwind/p/15358792.html
+https://github.com/paradeum-team/operator-env/blob/main/rancher/helm%E7%BA%BF%E4%B8%8B%E5%AE%89%E8%A3%85rancher.md
 
