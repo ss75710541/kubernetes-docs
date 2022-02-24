@@ -30,17 +30,17 @@ env: [] # 增加服务需要的 env 列表(非需要隐藏的env)，注意所有
 
 envFrom: [] # 增加服务需要的从secret 读取的env 列表(需要隐藏的env,数据库用户密码等)
   #- secretRef:
-  #    name: xxxx-secret
+  #  name: xxxx-secret
 
-extraVolumeMounts: [] # 增加挂载扩展卷挂载目录
-  #- mountPath: /etc/localtime
-  #  name: localtime
-  #  readOnly: true
+extraVolumeMounts: [] # 增加挂载扩展挂载目录
+  - mountPath: /etc/localtime
+    name: localtime
+    readOnly: true
 
 extraVolumes: [] # 增加扩展卷
-  #- name: localtime
-  #  hostPath:
-  #    path: /etc/localtime
+  - name: localtime
+    hostPath:
+      path: /etc/localtime
 ```
 
 ### secret env 示例

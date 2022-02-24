@@ -289,7 +289,7 @@ gitlab 项目中
 `设置`-`集成` 输入tekton webhook地址
 
 ```
-https://tekton-trigger-gitlab.solarfs.io
+https://tekton-trigger-gitlab.example.com
 ```
 
 ```
