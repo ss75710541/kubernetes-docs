@@ -91,12 +91,14 @@ helm upgrade --install argocd-notifications argocd-notifications-1.8.0.tgz -n ci
 test:
   parallelism: 1
   activeDeadlineSeconds: 100
+  # 必须，api test 的镜像信息
   image:
     repository: registry.example.com/nft/wine-api-test
     tag: "v0.1.5"
+  # 必须，tekton env-job 根据command[0]执行操作
   command:
     - "./wine-api-test"
-  # notify tekton api test envs, 使用argocd 通知 tekton 使用 envs
+  # 必须，notify tekton api test envs, 使用argocd 通知 tekton 使用 envs， tekton enb-job task 解析envs 转换为环境变量
   envs: "HOSTURL=https://example.com|BFSSERVER_HOSTURL=https://dev-wine-api.example.com"
   # helm test env, 手动使用helm安装时用下面env, argocd 部署时无用
   env:
@@ -119,15 +121,19 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   annotations:
+    # argocd app 订阅发邮件到 liujinye@example.com
 		notifications.argoproj.io/subscribe.on-sync-succeeded.email: "liujinye@example.com"
+    # argocd app 订阅通知 webhook tekton-api-test
 		notifications.argoproj.io/subscribe.on-sync-succeeded.tekton-api-test: ""
 ```
 
 ## wine-api-test 项目集成Tekton
 
-按tag 触发制作 `wine-api-test` 镜像并自动修改 `wine-api` helm chart 中 `test.image.tag` 值
+1. wine-api-test 代码添加tekton webhook 集成
 
-略
+2. 推送`Tag push event` 触发Tekton pipeline 制作 `wine-api-test` 镜像
+
+3. Tekton pipeline 自动修改 `wine-api` helm chart 中 `test.image.tag` 值
 
 参考：https://liujinye.gitbook.io/kubernetes-docs/cicd/shi-yong-tekton-gou-jian-ci-liu-cheng
 
