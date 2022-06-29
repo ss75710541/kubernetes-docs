@@ -32,12 +32,12 @@ envFrom: [] # 增加服务需要的从secret 读取的env 列表(需要隐藏的
   #- secretRef:
   #  name: xxxx-secret
 
-extraVolumeMounts: [] # 增加挂载扩展挂载目录
+extraVolumeMounts: #[] # 增加挂载扩展挂载目录
   - mountPath: /etc/localtime
     name: localtime
     readOnly: true
 
-extraVolumes: [] # 增加扩展卷
+extraVolumes: #[] # 增加扩展卷
   - name: localtime
     hostPath:
       path: /etc/localtime
