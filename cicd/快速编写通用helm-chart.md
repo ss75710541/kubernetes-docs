@@ -61,7 +61,7 @@ kubectl create secret generic dev-mysql-secret --from-env-file=dev-mysql.env
 
 修改 templates/deployment.yaml
 
-增加 env / envForm / extraVolumeMounts / extraVolume 相关内容
+增加 env / envFrom / extraVolumeMounts / extraVolume 相关内容
 
 ```yaml
     ...
