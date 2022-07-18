@@ -30,6 +30,6 @@ ingress:
 ## 安装
 
 ```sh
-helm upgrade --install adminer adminer-0.1.8.tgz -n adminer-system --create-namespace -f values.yaml
+helm upgrade --install adminer adminer-0.1.9.tgz -n adminer-system --create-namespace -f values.yaml
 ```
 
