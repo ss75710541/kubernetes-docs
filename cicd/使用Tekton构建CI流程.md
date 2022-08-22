@@ -41,9 +41,11 @@ kubectl get pods --namespace tekton-pipelines
 ### 安装 Tekton Cli
 
 ```sh
-# CentOS8
-dnf copr enable chmouel/tektoncd-cli
-dnf install tektoncd-cli
+# Linux AMD 64
+# Get the tar.xz
+curl -LO https://github.com/tektoncd/cli/releases/download/v0.25.0/tkn_0.25.0_Linux_x86_64.tar.gz
+# Extract tkn to your PATH (e.g. /usr/local/bin)
+sudo tar xvzf tkn_0.25.0_Linux_x86_64.tar.gz -C /usr/local/bin/ tkn
 ```
 
 ```sh
@@ -68,7 +70,7 @@ kubectl get pods --namespace tekton-pipelines
 ### 安装 Tekton Dashboard
 
 ```bash
-curl -o tekton-dashboard.yaml https://github.com/tektoncd/dashboard/releases/latest/download/tekton-dashboard-release.yaml
+curl -L -o tekton-dashboard.yaml https://github.com/tektoncd/dashboard/releases/download/v0.28.0/tekton-dashboard-release.yaml
 kubectl apply --filename tekton-dashboard.yaml
 ```
 

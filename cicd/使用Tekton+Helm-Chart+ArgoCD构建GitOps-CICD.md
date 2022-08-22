@@ -6,7 +6,7 @@
 
 ## 编写helm chart
 
-[编写helm chart](./编写helm chart.md)
+[快速编写通用helm-chart.md](./快速编写通用helm-chart.md)
 
 ## 使用Tekton实现CI流程
 
