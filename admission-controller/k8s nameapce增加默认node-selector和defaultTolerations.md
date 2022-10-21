@@ -27,7 +27,7 @@ metadata:
     # 默认的污点容忍
     scheduler.alpha.kubernetes.io/defaultTolerations: '[{"operator": "Exists", "effect": "NoSchedule", "key": "whitetiger"}]'
     # 污点容忍列表白名单
-    scheduler.alpha.kubernetes.io/tolerationsWhitelist: '[{"effect":"NoExecute","key":"node.kubernetes.io/not-ready","operator":"Exists","tolerationSeconds":300},{"effect":"NoExecute","key":"node.kubernetes.io/unreachable","operator":"Exists","tolerationSeconds":300},{"effect":"NoSchedule","key":"whitetiger","operator":"Exists"}]'
+    scheduler.alpha.kubernetes.io/tolerationsWhitelist: '[{"effect":"NoExecute","key":"node.kubernetes.io/not-ready","operator":"Exists"},{"effect":"NoExecute","key":"node.kubernetes.io/unreachable","operator":"Exists"},{"effect":"NoSchedule","key":"node.kubernetes.io/memory-pressure","operator":"Exists"},{"effect":"NoSchedule","key":"whitetiger","operator":"Exists"}]'
   ...
 ```
 
