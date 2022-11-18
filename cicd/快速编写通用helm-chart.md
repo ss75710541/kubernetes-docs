@@ -13,6 +13,25 @@ helm create <NAME>
 ```yaml
 version: 0.1.0 # chart版本
 appVersion: "x.x.x" # chart 只有一个服务一般同镜像tag
+
+# 如果需要发布在 https://artifacthub.io/, 酌情添加修改下面内容，不需要的可以忽略
+home: https://github.com/xxxxxxxxxxxxx/xxxxxx
+keywords:
+  - xxxxxx
+  - xxxxxx-chart
+source:
+  - https://github.com/xxxxxxxxxxxxx/xxxxxx
+  - https://github.com/xxxxxxxxxxxxx/xxxxxx-chart
+maintainers:
+  - name: ss75710541
+    email: 75710541@qq.com
+    url: https://github.com/ss75710541
+annotations:
+  artifacthub.io/links: |
+    - name: Chart Source
+      url: https://github.com/xxxxxxxxxxxxx/xxxxxx-chart
+    - name: Source
+      url: https://github.com/xxxxxxxxxxxxx/xxxxxx
 ```
 
 ## 修改 values.yaml
