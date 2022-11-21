@@ -121,3 +121,47 @@ kubectl create secret generic dev-mysql-secret --from-env-file=dev-mysql.env
       {{- end }}
 ```
 
+## 使用helm-docs 自动生成helm chart REDAME.md
+
+#### Mac 安装helm-docs
+
+```sh
+brew install norwoodj/tap/helm-docs
+```
+
+其它平台安装参考：https://github.com/norwoodj/helm-docs
+
+#### 创建模板文件 `README.md.gotmpl`
+
+````
+{{ template "chart.header" . }}
+{{ template "chart.description" . }}
+
+{{ template "chart.versionBadge" . }}{{ template "chart.typeBadge" . }}{{ template "chart.appVersionBadge" . }}
+
+## Installing the Chart
+
+Add repository
+
+```
+helm repo add paradeum-team https://xxxxxxxxxxxxx.github.io/helm-charts/
+helm repo update
+```
+
+Install chart
+
+```
+helm install my-walletconnect-relay xxxxxxxxxxx/xxxxxxxxxx --version --version {{ template "chart.version" . }}
+```
+
+{{ template "chart.requirementsSection" . }}
+
+{{ template "chart.valuesSection" . }}
+````
+
+#### 生成 README.md
+
+```sh
+helm-docs .
+```
+
