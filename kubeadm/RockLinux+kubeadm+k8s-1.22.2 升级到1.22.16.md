@@ -139,11 +139,11 @@ curl -o kube-flannel-v0.20.1.yaml  https://raw.githubusercontent.com/flannel-io/
 
 酌情修改配置
 
-```
+```yaml
   ...
   net-conf.json: |
     {
-      "Network": "10.128.0.0/16",
+      "Network": "10.0.0.0/8",
       "Backend": {
         "Type": "vxlan"
       }
