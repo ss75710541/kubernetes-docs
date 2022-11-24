@@ -14,6 +14,51 @@ yum install -y kubeadm-1.22.16-0 --disableexcludes=kubernetes
 kubeadm version
 ```
 
+检查kubeadm-config 酌情修改
+
+```sh
+kubectl edit -n kube-system cm kubeadm-config
+```
+
+内容如下
+
+```yaml
+data:
+  ClusterConfiguration: |
+    apiServer:
+      extraArgs:
+        authorization-mode: Node,RBAC
+        enable-admission-plugins: NodeRestriction,PodNodeSelector,PodTolerationRestriction
+      timeoutForControlPlane: 4m0s
+    apiVersion: kubeadm.k8s.io/v1beta3
+    certificatesDir: /etc/kubernetes/pki
+    clusterName: kubernetes
+    controlPlaneEndpoint: api-server.solarfs.k8s:6443
+    controllerManager:
+      extraArgs:
+        bind-address: 0.0.0.0
+    dns:
+      imageRepository: registry.hisun.netwarps.com/coredns
+      imageTag: 1.8.0
+    etcd:
+      local:
+        dataDir: /var/lib/etcd
+        extraArgs:
+          listen-client-urls: https://0.0.0.0:2379
+          listen-metrics-urls: http://0.0.0.0:2381
+          listen-peer-urls: https://0.0.0.0:2380
+    imageRepository: registry.hisun.netwarps.com/google_containers
+    kind: ClusterConfiguration
+    kubernetesVersion: v1.22.2
+    networking:
+      dnsDomain: cluster.local
+      podSubnet: 10.128.0.0/16
+      serviceSubnet: 10.96.0.0/12
+    scheduler:
+      extraArgs:
+        bind-address: 0.0.0.0
+```
+
 验证升级计划：
 
 ```sh
@@ -202,7 +247,7 @@ yum install -y kubeadm-1.22.16-0 --disableexcludes=kubernetes
 
   ```shell
   # 将 <node-to-drain> 替换为你正在腾空的节点的名称
-  kubectl drain <node-to-drain> --ignore-daemonsets
+  kubectl drain --ignore-daemonsets <node-to-drain> 
   ```
 
 ### 升级 kubelet 和 kubectl
@@ -239,6 +284,14 @@ kubectl get nodes
 ```
 
 `STATUS` 应显示所有节点为 `Ready` 状态，并且版本号已经被更新。
+
+`STATUS` 有 `NotReady` 状态节点
+
+删除对应节点 kube-flannel-ds pod, 触发重启kube-flannel-ds pod 后正常
+
+```sh
+kubectl delete pod kube-flannel-ds-h7wjj -n kube-flannel
+```
 
 ## 参考：
 
