@@ -137,7 +137,7 @@ kubeadm upgrade apply v1.22.16
 curl -o kube-flannel-v0.20.1.yaml  https://raw.githubusercontent.com/flannel-io/flannel/v0.20.1/Documentation/kube-flannel.yml
 ```
 
-酌情修改配置
+酌情修改配置，Network 的范围必须大于kubeadm-config 中 podSubnet 和 serviceSubnet 配置配置
 
 ```yaml
   ...
