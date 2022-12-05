@@ -128,8 +128,8 @@ collector:
     ingressClassName: nginx
     tls:
        - hosts:
-          - "jaeger-collector.apps145205.pldtest.k8s"
-    hosts: ["jaeger-collector.apps145205.pldtest.k8s"]
+          - "jaeger-collector.apps145205.example.k8s"
+    hosts: ["jaeger-collector.apps145205.example.k8s"]
     pathType: ImplementationSpecific
 
 query:
@@ -150,8 +150,8 @@ query:
     ingressClassName: nginx
     tls:
        - hosts:
-          - "jaeger-query.apps145205.pldtest.k8s"
-    hosts: ["jaeger-query.apps145205.pldtest.k8s"]
+          - "jaeger-query.apps145205.example.k8s"
+    hosts: ["jaeger-query.apps145205.example.k8s"]
     pathType: ImplementationSpecific
 
 esIndexCleaner:
@@ -179,8 +179,8 @@ hotrod:
     ingressClassName: nginx
     tls:
        - hosts:
-          - "jaeger-hotrod.apps145205.pldtest.k8s"
-    hosts: ["jaeger-hotrod.apps145205.pldtest.k8s"]
+          - "jaeger-hotrod.apps145205.example.k8s"
+    hosts: ["jaeger-hotrod.apps145205.example.k8s"]
     pathType: ImplementationSpecific
 ```
 
