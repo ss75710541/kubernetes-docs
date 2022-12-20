@@ -12,7 +12,7 @@ metadata:
   namespace: cicd
 spec:
   destination:
-    name: k8s-test
+    name: cloud-k8s-test
     namespace: kube-system
   project: dev-config-syncer
   source:
@@ -46,21 +46,13 @@ done
 ```
 kubectl get secret -A |grep registry-pld-cicd
 adminer-system                           registry-pld-cicd                                                kubernetes.io/dockerconfigjson        1      13m
-bigphoto                                 registry-pld-cicd                                                kubernetes.io/dockerconfigjson        1      242d
-dev-art-exhibition                       registry-pld-cicd                                                kubernetes.io/dockerconfigjson        1      29d
-dev-cellar                               registry-pld-cicd                                                kubernetes.io/dockerconfigjson        1      32d
-dev-foundation                           registry-pld-cicd                                                kubernetes.io/dockerconfigjson        1      179d
-dev-whitetigger                          registry-pld-cicd                                                kubernetes.io/dockerconfigjson        1      13d
+bigphoto                                 registry-pld-cicd                                                                                              kubernetes.io/dockerconfigjson        1      13d
 elastic-system                           registry-pld-cicd                                                kubernetes.io/dockerconfigjson        1      13m
 geth                                     registry-pld-cicd                                                kubernetes.io/dockerconfigjson        1      13m
 ipfs                                     registry-pld-cicd                                                kubernetes.io/dockerconfigjson        1      13m
 kube-system                              registry-pld-cicd                                                kubernetes.io/dockerconfigjson        1      15m
 nft                                      registry-pld-cicd                                                kubernetes.io/dockerconfigjson        1      34d
-tekton-pipelines                         registry-pld-cicd                                                kubernetes.io/dockerconfigjson        1      31d
-test-art-exhibition                      registry-pld-cicd                                                kubernetes.io/dockerconfigjson        1      29d
-test-cellar                              registry-pld-cicd                                                kubernetes.io/dockerconfigjson        1      51d
-test-foundation                          registry-pld-cicd                                                kubernetes.io/dockerconfigjson        1      177d
-test-whitetigger                         registry-pld-cicd                                                kubernetes.io/dockerconfigjson        1      13d
+tekton-pipelines                         registry-pld-cicd                                                
 ```
 
 ## 跨集群同步
