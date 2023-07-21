@@ -190,7 +190,10 @@
      interval: 15s
      labels:
        release: prometheus-community
-   
+       
+   # securityContext for containers. 如果配置了自定义插件，要把容器设置为非只读权限，否则插件的socket文件不能创建
+   containerSecurityContext:
+     readOnlyRootFilesystem: false
    enterprise:
      enabled: true
      license_secret: kong-enterprise-license
@@ -236,6 +239,11 @@
      pg_ssl_verify: "off"
      pg_user: kong
      plugins: bundled,openid-connect
+     # 如果有自定义插件下面内容替换plugins 配置，同时要注意containerSecurityContext配置
+     #plugins: "bundled,openid-connect,plugin-custom"
+     #pluginserver_names: "plugin-custom"
+     #pluginserver_plugin_bucket_start_cmd: "/usr/local/bin/plugin-custom"
+     #pluginserver_plugin_bucket_query_cmd: "/usr/local/bin/plugin-custom -dump"
      portal: false
      #portal_api_access_log: /dev/stdout
      #portal_api_error_log: /dev/stdout
@@ -390,6 +398,7 @@
        hostPort: 443
      externalIPs:
        - x.x.x.x
+     externalTrafficPolicy: Local # 配置这个是为了获取proxy 转发到后端的 remote_addr 为 真实client ip
      type: NodePort
    replicaCount: 1
    secretVolumes: []
@@ -403,8 +412,8 @@
        enabled: false
    updateStrategy:
      rollingUpdate:
-       maxSurge: 100%
-       maxUnavailable: 100%
+       maxSurge: 50%
+       maxUnavailable: 50%
      type: RollingUpdate
    ```
 
@@ -440,3 +449,9 @@
 ## 参考
 
 https://docs.konghq.com/gateway/latest/install/kubernetes/helm-quickstart/
+
+https://docs.konghq.com/kubernetes-ingress-controller/latest/guides/preserve-client-ip/
+
+https://docs.konghq.com/gateway/latest/plugin-development/pluginserver/go/
+
+https://docs.konghq.com/gateway/latest/plugin-development/pluginserver/plugins-kubernetes/
