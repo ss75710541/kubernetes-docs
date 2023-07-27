@@ -45,12 +45,11 @@ kubectl create configmap error-template-html --from-file=error_template.html -n 
 ```yaml
 env:
   ...
-  error_template_html: "/kong_prefix/proxy_temp/error_template.html"  
+  error_template_html: "/kong_prefix/error_template/error_template.html"
 ...
 extraConfigMaps:
   - name: error-template-html
-    mountPath: /kong_prefix/proxy_temp/error_template.html
-    subPath: error_template.html
+    mountPath: /kong_prefix/error_template
 ```
 
 ### 更新helm
