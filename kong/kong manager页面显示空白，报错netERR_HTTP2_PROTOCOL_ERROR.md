@@ -160,3 +160,7 @@ helm upgrade --install test kong-2.25.0.tgz --namespace kong -f values.yaml
 ```
 
 等Kong 服务正常更新启动后，再访问kong manager 页面后正常
+
+## 参考
+
+https://developer.aliyun.com/article/975820
