@@ -44,7 +44,7 @@
    在安装chart之前，必须先安装cert-manager CustomResourceDefinition资源。这是在一个单独的步骤中执行的，允许您轻松卸载和重新安装cert-manager，而不需要删除已安装的自定义资源。
 
    ```sh
-   wget https://github.com/jetstack/cert-manager/releases/download/v1.11.2/cert-manager.crds.yaml -o cert-manager-v1.11.2.crds.yaml
+   wget https://github.com/jetstack/cert-manager/releases/download/v1.11.2/cert-manager.crds.yaml -O cert-manager-v1.11.2.crds.yaml
    ```
 
    安装
