@@ -38,7 +38,7 @@ data:
       extraArgs:
         bind-address: 0.0.0.0
     dns:
-      imageRepository: registry.hisun.netwarps.com/coredns
+      imageRepository: docker.io/coredns
       imageTag: 1.8.0
     etcd:
       local:
@@ -47,7 +47,7 @@ data:
           listen-client-urls: https://0.0.0.0:2379
           listen-metrics-urls: http://0.0.0.0:2381
           listen-peer-urls: https://0.0.0.0:2380
-    imageRepository: registry.hisun.netwarps.com/google_containers
+    imageRepository: registry.netwarps.com/google_containers
     kind: ClusterConfiguration
     kubernetesVersion: v1.22.16
     networking:
@@ -73,23 +73,23 @@ kubeadm upgrade plan
 [upgrade] Fetching available versions to upgrade to
 [upgrade/versions] Cluster version: v1.22.16
 [upgrade/versions] kubeadm version: v1.22.17
-I1124 15:36:20.229304   34486 version.go:255] remote version is much newer: v1.28.4; falling back to: stable-1.22
+I1204 15:00:41.772228    3962 version.go:255] remote version is much newer: v1.28.4; falling back to: stable-1.22
 [upgrade/versions] Target version: v1.22.17
 [upgrade/versions] Latest version in the v1.22 series: v1.22.17
 
 Components that must be upgraded manually after you have upgraded the control plane with 'kubeadm upgrade apply':
-COMPONENT   CURRENT        TARGET
-kubelet     11 x v1.22.16   v1.22.16
+COMPONENT   CURRENT         TARGET
+kubelet     14 x v1.22.16   v1.22.17
 
 Upgrade to the latest version in the v1.22 series:
 
-COMPONENT                 CURRENT   TARGET
+COMPONENT                 CURRENT    TARGET
 kube-apiserver            v1.22.16   v1.22.17
 kube-controller-manager   v1.22.16   v1.22.17
 kube-scheduler            v1.22.16   v1.22.17
 kube-proxy                v1.22.16   v1.22.17
-CoreDNS                   1.8.0     v1.8.4
-etcd                      3.5.0-0   3.5.0-0
+CoreDNS                   1.8.0      v1.8.4
+etcd                      3.5.0-0    3.5.6-0
 
 You can now apply the upgrade by executing the following command:
 
@@ -127,8 +127,6 @@ kubeadm upgrade apply v1.22.17
 
 你的容器网络接口（CNI）驱动应该提供了程序自身的升级说明。 参阅[插件](https://v1-23.docs.kubernetes.io/zh/docs/concepts/cluster-administration/addons/)页面查找你的 CNI 驱动， 并查看是否需要其他升级步骤。
 
-如果 CNI 驱动作为 DaemonSet 运行，则在其他控制平面节点上不需要此步骤。
-
 **flannel v0.20.1 升级到 v0.22.3**
 
 下载flannel.yml
@@ -143,7 +141,7 @@ curl -o kube-flannel-v0.22.3.yaml  https://raw.githubusercontent.com/flannel-io/
   ...
   net-conf.json: |
     {
-      "Network": "10.128.0.0/8",
+      "Network": "10.128.0.0/16",
       "Backend": {
         "Type": "vxlan"
       }
@@ -189,29 +187,31 @@ kubectl apply -f kube-flannel-v0.22.3.yaml
 
 **对比服务配置**
 
-升级前的配置备份在 `/etc/kubernetes/tmp/kubeadm-backup-manifests-2023-11-23-16-50-42`,有可能手动修改过的服务配置，酌情使用kubeadm重新修改相关配置，参考：[重新配置 kubeadm 集群](https://kubernetes.io/zh-cn/docs/tasks/administer-cluster/kubeadm/kubeadm-reconfigure/)
+升级前的配置备份在 `/etc/kubernetes/tmp/kubeadm-backup-manifests-2023-12-04-15-01-38`,有可能手动修改过的服务配置，酌情使用kubeadm重新修改相关配置，参考：[重新配置 kubeadm 集群](https://kubernetes.io/zh-cn/docs/tasks/administer-cluster/kubeadm/kubeadm-reconfigure/)
 
 ```sh
-diff /etc/kubernetes/tmp/kubeadm-backup-manifests-2023-11-23-16-50-42/kube-controller-manager.yaml /etc/kubernetes/manifests/kube-controller-manager.yaml
+# cd /etc/kubernetes/tmp/kubeadm-backup-manifests-2023-12-04-15-01-38
+
+[root@master1 tmp]# diff kube-controller-manager.yaml /etc/kubernetes/manifests/kube-controller-manager.yaml
 32c32
 <     image: registry.hisun.netwarps.com/google_containers/kube-controller-manager:v1.22.16
 ---
->     image: registry.hisun.netwarps.com/google_containers/kube-controller-manager:v1.22.17
-[root@master1 tmp]# diff /etc/kubernetes/tmp/kubeadm-backup-manifests-2023-11-23-16-50-42/kube-scheduler.yaml /etc/kubernetes/manifests/kube-scheduler.yaml
+>     image: registry.netwarps.com/google_containers/kube-controller-manager:v1.22.17
+[root@master1 tmp]# diff kube-scheduler.yaml /etc/kubernetes/manifests/kube-scheduler.yaml
 20c20
 <     image: registry.hisun.netwarps.com/google_containers/kube-scheduler:v1.22.16
 ---
->     image: registry.hisun.netwarps.com/google_containers/kube-scheduler:v1.22.17
-[root@master1 tmp]# diff /etc/kubernetes/tmp/kubeadm-backup-manifests-2023-11-23-16-50-42/kube-apiserver.yaml /etc/kubernetes/manifests/kube-apiserver.yaml
+>     image: registry.netwarps.com/google_containers/kube-scheduler:v1.22.17
+[root@master1 tmp]# diff kube-apiserver.yaml /etc/kubernetes/manifests/kube-apiserver.yaml
 44c44
 <     image: registry.hisun.netwarps.com/google_containers/kube-apiserver:v1.22.16
 ---
->     image: registry.hisun.netwarps.com/google_containers/kube-apiserver:v1.22.17
-[root@master1 tmp]# diff /etc/kubernetes/tmp/kubeadm-backup-manifests-2023-11-23-16-50-42/etcd.yaml /etc/kubernetes/manifests/etcd.yaml
+>     image: registry.netwarps.com/google_containers/kube-apiserver:v1.22.17
+[root@master1 tmp]# diff etcd.yaml /etc/kubernetes/manifests/etcd.yaml
 34c34
 <     image: registry.hisun.netwarps.com/google_containers/etcd:3.5.0-0
 ---
->     image: registry.hisun.netwarps.com/google_containers/etcd:3.5.6-0
+>     image: registry.netwarps.com/google_containers/etcd:3.5.6-0
 ```
 
 **对于其它控制面节点**
@@ -282,6 +282,8 @@ yum install -y kubeadm-1.22.17-0 --disableexcludes=kubernetes
   ```
 
 ### 腾空节点
+
+- 官方文档写需要腾空节点，实际测试不腾空节点集群也可以正常工作(待观察吧)
 
 - 将节点标记为不可调度并驱逐所有负载，准备节点的维护：
 
