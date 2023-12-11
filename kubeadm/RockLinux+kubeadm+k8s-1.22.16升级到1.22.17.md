@@ -2,15 +2,15 @@
 
 ## 升级第一个控制面
 
-安装kubeadm 1.22.17
+所有master主机安装kubeadm 1.22.17
 
-```
+```sh
 yum install -y kubeadm-1.22.17-0 --disableexcludes=kubernetes
 ```
 
 验证 kubeadm 版本
 
-```
+```sh
 kubeadm version
 ```
 
@@ -111,7 +111,7 @@ _____________________________________________________________________
 
 执行升级到 v1.22.17
 
-```
+```sh
 kubeadm upgrade apply v1.22.17
 ```
 
